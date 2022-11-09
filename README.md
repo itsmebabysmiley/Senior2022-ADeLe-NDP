@@ -38,4 +38,3 @@ docker ps
 
 4. Enter [http://localhost:8000/](http://localhost:8000/) in a browser to see the application running.
 ```
-
