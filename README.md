@@ -1,6 +1,9 @@
 # Senior2022-ADeLe-NDP
-MUICT Senior project 2022 
 
+MUICT Senior project 2022 | APPLICATION OF DEEP LEARNING ON CLASSIFICATION OF NUTRIENT DEFICIENCIES AND PESTS FOR HANG KRA ROG THAI CANNABIS
+
+**Advisor:** Dr. Jidapa Kraisangka
+**Co-advisor:** Dr. Wudhichart Sawangphol
 ### Group members
 
 1. Krittitee Nildam(Boat)
@@ -9,6 +12,7 @@ MUICT Senior project 2022
 ## Pre-required
 
 1. Docker.
+
 ## Getting started
 
 I recommend you run on Docker.
@@ -35,6 +39,6 @@ docker ps
 # CONTAINER ID   IMAGE                      COMMAND                  CREATED          STATUS          PORTS                    NAMES
 # 7e4a8424f258   redis:alpine               "docker-entrypoint.s…"   10 minutes ago   Up 10 minutes   6379/tcp                 senior2022-adele-ndp-redis-1
 # c2bb7bcbd12d   senior2022-adele-ndp_web   "flask run"              10 minutes ago   Up 10 minutes   0.0.0.0:8000->5000/tcp   senior2022-adele-ndp-web-1
+```
 
 4. Enter [http://localhost:8000/](http://localhost:8000/) in a browser to see the application running.
-```
