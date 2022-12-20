@@ -47,7 +47,7 @@
                 </section>
                 <section>
                     <div class="row" style="padding-left: 1.5rem; padding-right: 1.5rem;">
-                    <div class="col">
+                    <div id="upload_file" class="col">
                         <div class="upload-box">
                             <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_388_4415)">
@@ -195,12 +195,26 @@
 
         </div>
     </div>
+    <input id="html-input-file-btn" type='file' style="display:none" onchange="loadFile(event)" /><br>
+    <img id="blah" src="#" alt="your image" width="300px" height="300px" />
 </body>
 </html>
 <script src="../static/js/just-go-to-homepage.js"></script>
 <script>
-    document.getElementById('blog-link').addEventListener('click', goToBlog);
+document.getElementById('blog-link').addEventListener('click', goToBlog);
 function goToBlog(){
     window.location.href = "blog.html";
+    
+}
+document.getElementById('upload_file').addEventListener('click', uploadFile);
+function uploadFile(){
+    document.getElementById('html-input-file-btn').click();
+}
+function loadFile(event) {
+    var output = document.getElementById('blah');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
 }
 </script>
