@@ -1,0 +1,80 @@
+@font-face { font-family: Sukhumvit; font-weight: bold; src: url('../fonts/sukhumvit/SukhumvitSet-Bold.ttf'); } 
+@font-face { font-family: Sukhumvit; font-weight: thin; src: url('../fonts/sukhumvit/SukhumvitSet-Thin.ttf'); } 
+@font-face { font-family: Sukhumvit; font-weight: normal; src: url('../fonts/sukhumvit/SukhumvitSet-Text.ttf'); } 
+@font-face { font-family: Sukhumvit; font-weight: lighter; src: url('../fonts/sukhumvit/SukhumvitSet-Light.ttf'); } 
+
+
+
+body{
+    background-color: #f6feb9;
+    font-family: Sukhumvit;
+}
+
+.background{
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    z-index: -100;
+}
+.header{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header svg{
+    margin-right: auto;
+}
+
+.header span{
+    margin-right: auto;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.main{
+    background-color: #ffff;
+    height: 100%;
+    margin-bottom: 3.5rem;
+    padding-bottom: 10px;
+    border-radius: 35px 35px 0px 0px;
+    box-shadow: 0px -2px 20px 0px rgba(0,0,0,0.20) ;
+}
+
+.upload-box{
+    background-color: #f5f9df;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.camara-box{
+    background-color: #f5f9df;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.article-button{
+    background-color: #e2e9b6;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 18.75px;
+}
+.article-title{
+    font-size: 16px;
+}
+.article-subtitle{
+    font-size: 12px;
+}
+
+#home-icon:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.20);
+}

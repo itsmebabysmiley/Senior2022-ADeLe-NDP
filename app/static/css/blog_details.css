@@ -1,0 +1,10 @@
+.img-result{
+    width: 200px;
+    height: 200px;
+    object-fit:cover;
+    border-radius: 30px;
+}
+h6{
+    font-weight: bold;
+}
+
