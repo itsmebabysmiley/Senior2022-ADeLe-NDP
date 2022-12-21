@@ -48,11 +48,12 @@
                     </section>
                 </section>
                 <section>
+                    {% if data %}
                         <div class="container" style="margin-bottom: 1.5rem;">
-                            <img class="img-result" src="../static/img/IMG_9898.JPG" alt="result">
+                            <img class="img-result" src="../static/img/weeds/{{data['img_path']}}" alt="result">
                         </div>
                         <div class="container text-start">
-                            <h6 >ไนโตรเจน</h6>
+                            <h6>{{ data['name']}}</h6>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Error soluta magni dignissimos illo delectus repellendus at vitae dolor, obcaecati vero odio! Dignissimos praesentium unde laudantium, corporis illum eos magnam ut?
                             </p>
@@ -63,13 +64,14 @@
                             <p>ใบเหลือง</p>
                             <h6>สาเหตุการเกิด</h6>
                             <p>แร่ธาตุในดินอาจไม่เพียงพอ</p>
-                            <h6>วิธัการดูแล</h6>
+                            <h6>วิธีการดูแล</h6>
                             <p>ทำได้โดยการเพิ่มไนโดรเจน เช่น ปุ๋ยคอก</p>
                             <p>แหล่งอ้างอิง</p>
                             <ul>
                                 <li>V Grow by Doctor BOB </li>
                             </ul>
                         </div>
+                    {% endif %}
                 </section>
             </div>
 

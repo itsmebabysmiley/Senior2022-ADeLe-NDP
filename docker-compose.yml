@@ -7,6 +7,7 @@ services:
     volumes:
       - .:/code
     environment:
+      PYTHONUNBUFFERED: 1
       FLASK_DEBUG: True
       FLASK_APP: ./app/app.py
   redis:

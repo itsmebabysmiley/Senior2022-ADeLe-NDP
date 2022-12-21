@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> 
     <link rel="stylesheet" href="../static/css/style.css">
     <link rel="stylesheet" href="../static/css/result.css">
+    <link rel="stylesheet" href="../static/css/loader.css">
+
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
@@ -38,9 +40,15 @@
             <span>ADeLe-NDP</span>
         </div>
         
-        <div class="container main">
-            <div class="container overflow-hidden">
-                <section >
+        <div class="container main" >
+            <div id="loading" style="display: block; padding-top:25%; padding-bottom:75%;" >
+                <div class="container text-center">
+                    <div class="loader"></div>
+                    <p style="margin-top: 1rem;">ระบบกำลังตรวจสอบ</p>
+                </div>
+            </div>
+            <div id="main-content" class="container overflow-hidden" style="display: none;">
+                <section>
                     <div class="text-center" style="padding: 2rem;">
                         <h1 style="font-weight:bold;">ผลการตรวจสอบ</h1>
                     </div>
@@ -48,26 +56,30 @@
                 <section>
                     <div style="position:relative; height:220px">
                         <div class="container" style="position:absolute;">
-                            <div class="container result">
-                                <img class="img-result" src="../static/img/IMG_9898.JPG" alt="result">
+                            <div id="img-prediction" class="container result">
+                                {% if img %}
+                                <img class="img-result" src="{{img}}" alt="result">
+                                {% else %}
+                                <img class="img-result" src="#" alt="result">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="container result-label d-flex justify-content-center ">
                             <div class="row " style="width: 200px;">
-                                <div class="col text-center result-label-class">
-                                    สุขภาพดี
+                                <div id="class-prediction" class="col text-center result-label-class">
+                                    <span >สุขภาพดี</span>
                                 </div>
                             </div>
                         </div>
                         <div class="container result-label2 d-flex justify-content-center">
-                            <div class="text-center result-label-percentage">
+                            <div id="prob-prediction" class="text-center result-label-percentage">
                                 <span style="font-size:large">97%</span>
                             </div>
                         </div>
                     </div>
                 </section>
                 <div style="height: 2rem;"></div>
-                <section>
+                <section id="unhealthy-info">
                     <div class="container">
                         <div class="row g-0 text-center align-items-center">
                             <div class="col-5 round-box ">สาเหตุ</div>
@@ -94,8 +106,7 @@
                         </ul>
                     </div>
                 </section>
-
-                <!-- <section>
+                <section id="healthy-info">
                     <div class="container">
                         <div class="container" style="height: 2px; width:75%; background-color:#9fab48"></div>
                         <div class="text-center" style="padding: 2rem;">
@@ -103,11 +114,104 @@
                             <p style="font-size: 13px;">อัพโหลดรูป หรือ ถ่ายรูปใบกัญชาเพื่อให้ระบบตรวจสอบคุณภาพของใบ</p>
                         </div>
                     </div>
-                </section> -->
+                    <section>
+                        <div class="row" style="padding-left: 1.5rem; padding-right: 1.5rem; margin-bottom:2.5rem;">
+                        <div id="upload_file" class="col">
+                            <div class="upload-box text-center">
+                                <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_388_4415)">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.73914 2.52535C10.6193 0.904059 13.0173 0.00863965 15.5 0.000854492C20.5603 0.000854492 24.7609 3.76315 25.218 8.61463C28.2128 9.03789 30.5492 11.5455 30.5492 14.623C30.5492 18.0016 27.7312 20.6935 24.3169 20.6935H19.2623C19.0128 20.6935 18.7736 20.5944 18.5972 20.418C18.4208 20.2416 18.3217 20.0024 18.3217 19.7529C18.3217 19.5034 18.4208 19.2642 18.5972 19.0878C18.7736 18.9114 19.0128 18.8123 19.2623 18.8123H24.3188C26.7474 18.8123 28.668 16.9086 28.668 14.623C28.668 12.3355 26.7493 10.4318 24.3169 10.4318H23.3764V9.49124C23.3782 5.3151 19.8793 1.882 15.5 1.882C13.4681 1.89012 11.506 2.62399 9.96753 3.95126C8.5435 5.17777 7.79857 6.65635 7.79857 7.81702V8.65978L6.96146 8.75195C4.33349 9.03977 2.33195 11.1974 2.33195 13.7671C2.33195 16.5267 4.64576 18.8123 7.56342 18.8123H11.7377C11.9871 18.8123 12.2264 18.9114 12.4028 19.0878C12.5792 19.2642 12.6783 19.5034 12.6783 19.7529C12.6783 20.0024 12.5792 20.2416 12.4028 20.418C12.2264 20.5944 11.9871 20.6935 11.7377 20.6935H7.56342C3.66381 20.6935 0.450806 17.6197 0.450806 13.7671C0.450806 10.4506 2.83234 7.70415 5.98514 7.00813C6.25415 5.3847 7.29818 3.76691 8.73914 2.52535Z" fill="#7F8F0B"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.834 7.80013C14.9214 7.71254 15.0252 7.64304 15.1394 7.59563C15.2537 7.54821 15.3762 7.5238 15.4999 7.5238C15.6237 7.5238 15.7462 7.54821 15.8604 7.59563C15.9747 7.64304 16.0785 7.71254 16.1659 7.80013L21.8093 13.4436C21.9859 13.6202 22.0851 13.8597 22.0851 14.1095C22.0851 14.3593 21.9859 14.5988 21.8093 14.7754C21.6327 14.952 21.3932 15.0513 21.1434 15.0513C20.8936 15.0513 20.6541 14.952 20.4775 14.7754L16.4405 10.7366V27.2775C16.4405 27.527 16.3414 27.7662 16.165 27.9426C15.9886 28.119 15.7494 28.2181 15.4999 28.2181C15.2505 28.2181 15.0112 28.119 14.8349 27.9426C14.6585 27.7662 14.5594 27.527 14.5594 27.2775V10.7366L10.5224 14.7754C10.3458 14.952 10.1063 15.0513 9.8565 15.0513C9.60673 15.0513 9.36718 14.952 9.19057 14.7754C9.01396 14.5988 8.91473 14.3593 8.91473 14.1095C8.91473 13.8597 9.01396 13.6202 9.19057 13.4436L14.834 7.80013Z" fill="#7F8F0B"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_388_4415">
+                                    <rect width="30.0984" height="30.0984" fill="white" transform="translate(0.450806 0.000854492)"/>
+                                    </clipPath>
+                                    </defs>
+                                </svg>                        
+                                <div>
+                                    อัพโหลดรูป
+                                </div>
+                            </div>
+                        </div>
+                        <div id="take_photo" class="col">
+                            <div class="camara-box text-center">
+                                <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_388_4426)">
+                                    <path d="M28.6688 22.575C28.6688 23.0739 28.4706 23.5524 28.1178 23.9052C27.765 24.258 27.2865 24.4562 26.7875 24.4562H4.21251C3.71357 24.4562 3.23507 24.258 2.88227 23.9052C2.52946 23.5524 2.33126 23.0739 2.33126 22.575V11.2875C2.33126 10.7885 2.52946 10.31 2.88227 9.95721C3.23507 9.6044 3.71357 9.4062 4.21251 9.4062H6.41734C7.91338 9.40538 9.34789 8.8106 10.4056 7.75258L11.967 6.19491C12.3188 5.843 12.7957 5.6448 13.2933 5.6437H17.703C18.2019 5.64381 18.6803 5.84208 19.033 6.19491L20.5907 7.75258C21.1148 8.27691 21.7372 8.69283 22.4222 8.97656C23.1071 9.2603 23.8413 9.40629 24.5827 9.4062H26.7875C27.2865 9.4062 27.765 9.6044 28.1178 9.95721C28.4706 10.31 28.6688 10.7885 28.6688 11.2875V22.575ZM4.21251 7.52495C3.21464 7.52495 2.25763 7.92136 1.55202 8.62696C0.846417 9.33257 0.450012 10.2896 0.450012 11.2875L0.450012 22.575C0.450012 23.5728 0.846417 24.5298 1.55202 25.2354C2.25763 25.941 3.21464 26.3375 4.21251 26.3375H26.7875C27.7854 26.3375 28.7424 25.941 29.448 25.2354C30.1536 24.5298 30.55 23.5728 30.55 22.575V11.2875C30.55 10.2896 30.1536 9.33257 29.448 8.62696C28.7424 7.92136 27.7854 7.52495 26.7875 7.52495H24.5827C23.5849 7.52474 22.628 7.12819 21.9226 6.42254L20.3649 4.86486C19.6595 4.15921 18.7026 3.76266 17.7048 3.76245H13.2952C12.2974 3.76266 11.3405 4.15921 10.6351 4.86486L9.07743 6.42254C8.37198 7.12819 7.41513 7.52474 6.41734 7.52495H4.21251Z" fill="#7F8F0B"/>
+                                    <path d="M15.5 20.6938C14.2527 20.6938 13.0564 20.1982 12.1744 19.3162C11.2924 18.4342 10.7969 17.238 10.7969 15.9906C10.7969 14.7433 11.2924 13.547 12.1744 12.665C13.0564 11.783 14.2527 11.2875 15.5 11.2875C16.7474 11.2875 17.9436 11.783 18.8256 12.665C19.7076 13.547 20.2031 14.7433 20.2031 15.9906C20.2031 17.238 19.7076 18.4342 18.8256 19.3162C17.9436 20.1982 16.7474 20.6938 15.5 20.6938ZM15.5 22.575C17.2463 22.575 18.9211 21.8813 20.1559 20.6465C21.3907 19.4117 22.0844 17.7369 22.0844 15.9906C22.0844 14.2443 21.3907 12.5696 20.1559 11.3348C18.9211 10.1 17.2463 9.40625 15.5 9.40625C13.7537 9.40625 12.079 10.1 10.8442 11.3348C9.60936 12.5696 8.91565 14.2443 8.91565 15.9906C8.91565 17.7369 9.60936 19.4117 10.8442 20.6465C12.079 21.8813 13.7537 22.575 15.5 22.575ZM6.09377 12.2281C6.09377 12.4776 5.99467 12.7168 5.81827 12.8932C5.64187 13.0696 5.40262 13.1688 5.15315 13.1688C4.90368 13.1688 4.66443 13.0696 4.48803 12.8932C4.31163 12.7168 4.21252 12.4776 4.21252 12.2281C4.21252 11.9787 4.31163 11.7394 4.48803 11.563C4.66443 11.3866 4.90368 11.2875 5.15315 11.2875C5.40262 11.2875 5.64187 11.3866 5.81827 11.563C5.99467 11.7394 6.09377 11.9787 6.09377 12.2281Z" fill="#7F8F0B"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_388_4426">
+                                    <rect width="30.1" height="30.1" fill="white" transform="translate(0.450012)"/>
+                                    </clipPath>
+                                    </defs>
+                                </svg>
+                                <div>
+                                    ถ่ายรูป
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </section>
+                </section>
             </div>
-
         </div>
     </div>
+    <form action="/result" method="post" enctype="multipart/form-data">
+        <input id="html-take-photo-btn" type="file" name="take_photo" accept="image/*"  style="display:none" capture="user" onchange="loadFile(event)">
+        <input id="html-input-file-btn" type='file' name="upload_photo"style="display:none" accept="image/*" onchange="loadFile(event)"/><br>
+        <input id="html-submit-btn" type="submit" style="display:none">
+    </form>
+
 </body>
 </html>
 <script src="../static/js/just-go-to-homepage.js"></script>
+<script src="../static/js/please-use-this-to-upload-file.js"></script>
+<script>
+
+    request_prediction();
+    
+    function request_prediction(){
+        
+        let base64img = document.getElementById("img-prediction").getElementsByTagName('img').item(0).src;
+        console.log(base64img);
+
+        let url = '/prediction'
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({'file':base64img}),
+        })
+        .then(function(response){
+            return  response.json();
+        })
+        .then(function(res){
+            document.getElementById("class-prediction").getElementsByTagName('span').item(0).innerText = res['class'];
+            document.getElementById("prob-prediction").getElementsByTagName('span').item(0).innerText = res['prob'];
+
+            
+            if(res['class'] === 'สุขภาพดี'){
+                document.getElementById("unhealthy-info").remove();
+            }else{
+                document.getElementById("healthy-info").remove();
+                document.getElementById("img-prediction").classList.remove('result');
+                document.getElementById("img-prediction").classList.add('result-red');
+                document.getElementById('class-prediction').classList.remove('result-label-class');
+                document.getElementById('class-prediction').classList.add('result-label-class-red');
+                document.getElementById('prob-prediction').classList.remove('result-label-percentage');
+                document.getElementById('prob-prediction').classList.add('result-label-percentage-red');
+            }
+            // hide loading
+            document.getElementById("loading").style.display="none";
+            // display prediction
+            document.getElementById("main-content").style.display = 'block';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+          });
+    }
+
+</script>

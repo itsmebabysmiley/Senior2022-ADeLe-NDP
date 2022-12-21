@@ -37,10 +37,14 @@ body{
     font-size: 30px;
 }
 
+#home-icon:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.20);
+}
+
 .main{
     background-color: #ffff;
     height: 100%;
-    margin-bottom: 3.5rem;
     padding-bottom: 10px;
     border-radius: 35px 35px 0px 0px;
     box-shadow: 0px -2px 20px 0px rgba(0,0,0,0.20) ;
@@ -74,7 +78,3 @@ body{
     font-size: 12px;
 }
 
-#home-icon:hover{
-    cursor: pointer;
-    background-color: rgba(0,0,0,0.20);
-}

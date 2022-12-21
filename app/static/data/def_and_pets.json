@@ -1,0 +1,43 @@
+{
+    "nitrogen" : {
+        "name" : "การขาดไนโตรเจน",
+        "apperance" : "lorem",
+        "cause" : "lorem",
+        "fix" : "lorem",
+        "img_path" : "n.JPG",
+        "source" : "lorem"
+    },
+    "phosphorus" : {
+        "name" : "การขาดโฟสฟอรัส",
+        "apperance" : "lorem",
+        "cause" : "lorem",
+        "fix" : "lorem",
+        "img_path" : "p.JPG",
+        "source" : "lorem"
+    },
+    "calcium" : {
+        "name" : "การขาดแคลเซียม",
+        "apperance" : "lorem",
+        "cause" : "lorem",
+        "fix" : "lorem",
+        "img_path" : "ca.JPG",
+        "source" : "lorem"
+    },
+    "caterpillar" : {
+        "name" : "หนอนกินใบ",
+        "apperance" : "lorem",
+        "cause" : "lorem",
+        "fix" : "lorem",
+        "img_path" : "cat.JPG",
+        "source" : "lorem"
+    },
+    "leafminer" : {
+        "name" : "หนอนชอนใบ",
+        "apperance" : "lorem",
+        "cause" : "lorem",
+        "fix" : "lorem",
+        "img_path" : "leaf.JPG",
+        "source" : "lorem"
+    }
+
+}

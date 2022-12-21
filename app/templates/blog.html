@@ -48,8 +48,8 @@
                     </section>
                 </section>
                 <section>
-                    <div id="nitrogen_def" class="card text-start">
-                        <img src="../static/img/IMG_9898.JPG" class="card-img-top" alt="...">
+                    <div class="card text-start" onclick="window.location.href = `/blog?article=nitrogen`;">
+                        <img src="../static/img/weeds/n.JPG" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title">Nitrogen Deficiency</h5>
                             <div class="row g-0">
@@ -64,13 +64,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card text-start">
-                        <img src="../static/img/IMG_9898.JPG" class="card-img-top" alt="...">
+                    <div class="card text-start" onclick="window.location.href = `/blog?article=phosphorus`;">
+                        <img src="../static/img/weeds/p.JPG" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Nitrogen Deficiency</h5>
+                            <h5 class="card-title">Phosphorus Deficiency</h5>
                             <div class="row g-0">
                                 <div class="col-11">
-                                    <p class="card-text">การขาดไนโตรเจน</p>
+                                    <p class="card-text">การขาดฟอสฟอรัส</p>
                                 </div>
                                 <div class="col-1 text-center">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,13 +80,45 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card text-start">
-                        <img src="../static/img/IMG_9898.JPG" class="card-img-top" alt="...">
+                    <div class="card text-start" onclick="window.location.href = `/blog?article=calcium`;">
+                        <img src="../static/img/weeds/ca.JPG" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">Nitrogen Deficiency</h5>
+                            <h5 class="card-title">Calcium Deficiency</h5>
                             <div class="row g-0">
                                 <div class="col-11">
-                                    <p class="card-text">การขาดไนโตรเจน</p>
+                                    <p class="card-text">การขาดแคลเซียม</p>
+                                </div>
+                                <div class="col-1 text-center arrow">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-start" onclick="window.location.href = `/blog?article=caterpillar`;">
+                        <img src="../static/img/weeds/cat.JPG" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Caterpillar</h5>
+                            <div class="row g-0">
+                                <div class="col-11">
+                                    <p class="card-text">หนอนกินใบ</p>
+                                </div>
+                                <div class="col-1 text-center arrow">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="#1A1A1A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card text-start" onclick="window.location.href = `/blog?article=leafminer`;">
+                        <img src="../static/img/weeds/leaf.JPG" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Leftminer</h5>
+                            <div class="row g-0">
+                                <div class="col-11">
+                                    <p class="card-text">หนอนชอนใบ</p>
                                 </div>
                                 <div class="col-1 text-center arrow">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,9 +136,5 @@
 </html>
 <script src="../static/js/just-go-to-homepage.js"></script>
 <script>
-    document.getElementById('nitrogen_def').addEventListener('click', cl_Div);
-function cl_Div() {
-    window.location.href = "blog_details.html";
-}
 
 </script>

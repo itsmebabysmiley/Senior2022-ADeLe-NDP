@@ -4,7 +4,13 @@
     padding: 0px;
     border: 10px solid #eefd86;
     border-radius: 40px;
-    /* position: absolute; */
+}
+.result-red{
+    width: fit-content;
+    height: fit-content;
+    padding: 0px;
+    border: 10px solid #ffbdae;
+    border-radius: 40px;
 }
 
 .img-result{
@@ -32,11 +38,27 @@
     border-radius: 40px;
 }
 
+.result-label-class-red{
+    width: fit-content;
+    background-color: #ffbdae;
+    padding: 5px;
+    border: 2px solid #f37255;
+    border-radius: 40px;
+}
+
 .result-label-percentage{
     background-color: #eefd86;
     margin-left: 160px;
     padding: 10px;
     border: 2px solid #7f8f0b;
+    border-radius: 100px;
+}
+
+.result-label-percentage-red{
+    background-color: #ffbdae;
+    margin-left: 160px;
+    padding: 10px;
+    border: 2px solid #f37255;
     border-radius: 100px;
 }
 

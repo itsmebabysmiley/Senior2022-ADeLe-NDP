@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- HTML code to create a file input and a button to take a picture from the camera -->
+<input type="file" id="image-input" accept="image/*">
+<button id="camera-button" type="button">Take Picture</button>
+
+<form action="http://localhost:8000/upload" method="post">
+  <input type="text" name="name">
+  <input type="submit" value="">
+</form>
+
+<!-- JavaScript code to handle the file input and camera button -->
+<script>
+  // Get the file input and camera button elements
+  var fileInput = document.getElementById("image-input");
+  var cameraButton = document.getElementById("camera-button");
+
+  // Set up an event listener for the camera button
+  cameraButton.addEventListener("click", function() {
+    // Check if the browser supports the Camera API
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      // If the Camera API is supported, open the camera to take a picture
+      navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        var camera = document.createElement("video");
+        camera.srcObject = stream;
+        camera.addEventListener("click", function() {
+          // When the user clicks on the camera video, take a snapshot and set it as the file input value
+          var canvas = document.createElement("canvas");
+          canvas.width = camera.videoWidth;
+          canvas.height = camera.videoHeight;
+          canvas.getContext("2d").drawImage(camera, 0, 0);
+          fileInput.value = canvas.toDataURL("image/png");
+
+          // Stop the camera stream and close the camera video element
+          camera.srcObject.getTracks().forEach(function(track) { track.stop(); });
+          camera.remove();
+        });
+        document.body.appendChild(camera);
+      });
+    } else {
+      // If the Camera API is not supported, fall back to the file input
+      fileInput.click();
+    }
+  });
+
+  // Set up an event listener for the file input
+  fileInput.addEventListener("change", function() {
+    // When the file input value changes, get the selected image file and send it to the server
+    var file = this.files[0];
+    var formData = new FormData();
+    formData.append("file", file);
+    fetch("/upload", { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+  });
+</script>
+</body>
+</html>
