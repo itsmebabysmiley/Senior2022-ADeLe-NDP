@@ -85,6 +85,10 @@ def upload_file():
 
     return html
 
+@app.get('/test-api')
+def test():
+    return render_template('test-api.html')
+
 
 @app.route('/blog',methods=['GET'])
 def blog():
