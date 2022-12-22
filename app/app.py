@@ -16,6 +16,9 @@ adele = AdelePrediction()
 
 app = Flask(__name__)
 
+def allowed_file(filename):
+    return '.' in filename and filename.split('.')[1].lower() in {'jpg','jpeg','png'}
+
 
 def save_and_decode_image(request, logger):
     if 'file' not in request.files:
@@ -28,6 +31,8 @@ def save_and_decode_image(request, logger):
             print('Decode failed')
     else:
         file = request.files['file']
+        if not allowed_file(file.filename):
+            return None
         print('Read image file')
         if file.filename == '':
             print('No filename')
@@ -46,8 +51,11 @@ def save_and_decode_image(request, logger):
 @app.route('/prediction',methods=['POST'])
 def get_prediction():
     file_name = save_and_decode_image(request,logger)
-    result = adele.prediction(file_name)
-    return make_response(result);
+    if file_name:
+        result = adele.prediction(file_name)
+        return make_response(result);
+    
+    return make_response({'error' : 'unsupported file type {.jpg, .jpeg, .png}.'})
 
 
 @app.route('/result',methods=['GET','POST'])

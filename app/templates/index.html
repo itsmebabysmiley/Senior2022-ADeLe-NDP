@@ -198,8 +198,8 @@
         </div>
     </div>
     <form action="/result" method="post" enctype="multipart/form-data">
-        <input id="html-take-photo-btn" type="file" name="take_photo" accept="image/*"  style="display:none" capture="environment" onchange="loadFile(event)">
-        <input id="html-input-file-btn" type='file' name="upload_photo"style="display:none" accept="image/*" onchange="loadFile(event)"/><br>
+        <input id="html-take-photo-btn" type="file" name="take_photo" accept="image/png, image/jpeg, image/jpg"  style="display:none" capture="environment" onchange="loadFile(event)">
+        <input id="html-input-file-btn" type='file' name="upload_photo"style="display:none" accept="image/png, image/jpeg, image/jpg" onchange="loadFile(event)"/><br>
         <input id="html-submit-btn" type="submit" style="display:none">
     </form>
 </body>

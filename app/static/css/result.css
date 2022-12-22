@@ -14,8 +14,8 @@
 }
 
 .img-result{
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     object-fit:cover;
     border-radius: 30px;
     
@@ -23,11 +23,11 @@
 
 .result-label{
     position: relative;
-    top: 200px;
+    top: 250px;
 }
 .result-label2{
     position: relative;
-    top: 155px;
+    top: 205px;
 }
 
 .result-label-class{
@@ -68,6 +68,21 @@
     padding: 15px;
     margin: 15px;
     border-radius: 20px;
+}
+
+.round-button{
+    width: fit-content;
+    padding: 10px 30px 10px 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    border: 1px solid #eef7b7;
+    color: #a9b45b;
+}
+
+.round-button:hover{
+    cursor: pointer;
+    background-color: #eef7b7;
 }
 
 .content{
