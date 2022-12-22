@@ -193,7 +193,7 @@
             document.getElementById("prob-prediction").getElementsByTagName('span').item(0).innerText = res['prob'].slice(0, 2)+'%';
 
             
-            if(res['class'] === 'สุขภาพดี'){
+            if(res['class'] === 'สุขภาพดี' || res['class'] === 'healthy'){
                 document.getElementById("unhealthy-info").remove();
             }else{
                 document.getElementById("healthy-info").remove();
