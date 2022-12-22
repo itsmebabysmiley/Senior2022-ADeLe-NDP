@@ -8,11 +8,12 @@ import json
 from flask import Flask,render_template,request, jsonify, redirect, url_for
 from flask.helpers import make_response
 
-from prediction import prediction
-
+from prediction import AdelePrediction
 
 load_dotenv(dotenv_path='./.env')
 logger = get_logger('./app/log/adele-ndp/weed.log',level='info')
+adele = AdelePrediction()
+
 app = Flask(__name__)
 
 
@@ -45,7 +46,7 @@ def save_and_decode_image(request, logger):
 @app.route('/prediction',methods=['POST'])
 def get_prediction():
     file_name = save_and_decode_image(request,logger)
-    result = prediction(file_name)
+    result = adele.prediction(file_name)
     return make_response(result);
 
 
@@ -59,10 +60,11 @@ def result():
                 f = request.files['take_photo']
             else:
                 f = request.files['upload_photo']
-            f.save('./image.jpg')
-            data = open('./image.jpg', 'rb').read()
-            image_string = base64.b64encode(data)
+            # f.save('./image.jpg')
+            # data = open('./image.jpg', 'rb').read()
+            image_string = base64.b64encode(f.read())
             data_base64 = image_string.decode()
+            # os.remove('./image.jpg')
 
         img_base64 = 'data:image/jpeg;base64,' + data_base64
 
