@@ -1,20 +1,19 @@
 import base64
 import time
-from random import randrange
-
+import os
 from dotenv import load_dotenv
 from log.logger import get_logger
 import json
-import redis
+
 from flask import Flask,render_template,request, jsonify, redirect, url_for
 from flask.helpers import make_response
 
 from prediction import prediction
 
+
 load_dotenv(dotenv_path='./.env')
 logger = get_logger('./app/log/adele-ndp/weed.log',level='info')
 app = Flask(__name__)
-cache = redis.Redis(host='redis', port=6379)
 
 
 def save_and_decode_image(request, logger):
@@ -37,19 +36,17 @@ def save_and_decode_image(request, logger):
             with open(f'./upload/{file_name}', 'wb') as f:
                 f.write(base64_img)
         else:
-            file.save(file_name)
-        logger.info(f'save image to ./upload/{file_name}.jpg')
+            file.save(os.path.join('./upload',file_name))
+        logger.info(f'save image to ./upload/{file_name}')
+    image_path = './upload/'+file_name
+    return image_path
 
 
 @app.route('/prediction',methods=['POST'])
-def prediction():
-    save_and_decode_image(request,logger)
-    r = randrange(0,2)
-    if r == 0:
-        data = {'class':'สุขภาพดี','prob': '200%'}
-    else:
-        data = {'class':'ขาดไนโตรเจน','prob': '200%'}
-    return make_response(data);
+def get_prediction():
+    file_name = save_and_decode_image(request,logger)
+    result = prediction(file_name)
+    return make_response(result);
 
 
 @app.route('/result',methods=['GET','POST'])
@@ -71,6 +68,22 @@ def result():
 
         return render_template('result.html',img=img_base64)
 
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' in request.files:
+        print(request.files['file'])
+        f = request.files['file']
+        # f.save('./image.jpg')
+        # data = open('./image.jpg', 'rb').read()
+        image_string = base64.b64encode(f.read())
+        data_base64 = image_string.decode()
+        
+    html = '<img src="data:image/jpeg;base64,' + data_base64 + '">'
+
+    return html
+
+
 @app.route('/blog',methods=['GET'])
 def blog():
     article = request.args.get('article')
@@ -87,26 +100,6 @@ def blog():
             data = None
         return render_template('blog_details.html',data=data)
 
-@app.get('/test-api')
-def test_api():
-    return render_template('test-api.html')
-
-
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        if 'file' in request.files:
-            print(request.files['file'])
-            f = request.files['file']
-            f.save('./image.jpg')
-            data = open('./image.jpg', 'rb').read()
-            image_string = base64.b64encode(data)
-            data_base64 = image_string.decode()
-
-        html = '<img src="data:image/jpeg;base64,' + data_base64 + '">'
-
-        return html
-    
 
 @app.route('/blog-legel-cannabisTH',methods=['GET'])
 def blog_legel_cannabis():
