@@ -19,3 +19,6 @@ upload
 
 app/log
 log
+
+
+app/models/*
