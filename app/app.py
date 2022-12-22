@@ -21,6 +21,7 @@ def allowed_file(filename):
 
 
 def save_and_decode_image(request, logger):
+    # Request as a base64 image.
     if 'file' not in request.files:
         file = request.get_json('file')
         if file:
@@ -29,6 +30,8 @@ def save_and_decode_image(request, logger):
             print('Decoded base64 image')
         else:
             print('Decode failed')
+            return None
+    # Request as a Blob image.
     else:
         file = request.files['file']
         if not allowed_file(file.filename):
@@ -36,7 +39,9 @@ def save_and_decode_image(request, logger):
         print('Read image file')
         if file.filename == '':
             print('No filename')
+            return None
     file_name = str(time.time())+'.jpg'
+    # Save image.
     if file:
         if isinstance(file,dict):
             with open(f'./upload/{file_name}', 'wb') as f:
@@ -55,11 +60,12 @@ def get_prediction():
         result = adele.prediction(file_name)
         return make_response(result);
     
-    return make_response({'error' : 'unsupported file type {.jpg, .jpeg, .png}.'})
+    return make_response({'error' : 'Missing filename or unsupported file type {.jpg, .jpeg, .png}.'})
 
 
 @app.route('/result',methods=['GET','POST'])
 def result():
+    # Just for check UI.
     if request.method == 'GET':
         return render_template('result.html',img=None)
     else:

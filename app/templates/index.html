@@ -193,11 +193,14 @@
                 </section>
             </div>
         </div>
-        <div class="footer">
-
+    </div>
+    <div class="container-fuild">
+        <div class="container footer">
+            <h5 style="font-weight: bold;">About us</h5>
+            <p>Please know this. I did this whole project alone(coding).</p>
         </div>
     </div>
-    <form action="/result" method="post" enctype="multipart/form-data">
+    <form action="/result" method="post" enctype="multipart/form-data" style="width: 0; height:0;">
         <input id="html-take-photo-btn" type="file" name="take_photo" accept="image/png, image/jpeg, image/jpg"  style="display:none" capture="environment" onchange="loadFile(event)">
         <input id="html-input-file-btn" type='file' name="upload_photo"style="display:none" accept="image/png, image/jpeg, image/jpg" onchange="loadFile(event)"/><br>
         <input id="html-submit-btn" type="submit" style="display:none">
