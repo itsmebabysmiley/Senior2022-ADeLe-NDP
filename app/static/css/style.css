@@ -40,6 +40,7 @@ body{
 #home-icon:hover{
     cursor: pointer;
     background-color: rgba(0,0,0,0.20);
+    border-radius: 5px;
 }
 
 .main{
@@ -62,7 +63,21 @@ body{
     border-radius: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
+
 }
+
+.upload-box:hover{
+    cursor: pointer;
+    background-color: #e2e9b6;
+    transform: scale(1.1);
+}
+
+.camara-box:hover{
+    cursor: pointer;
+    background-color: #e2e9b6;
+    transform: scale(1.1);
+}
+
 
 .article-button{
     background-color: #e2e9b6;
@@ -71,6 +86,10 @@ body{
     margin-bottom: 10px;
     border-radius: 18.75px;
 }
+.article-button:hover{
+    cursor: pointer;
+    background-color: #f5f9df;
+}
 .article-title{
     font-size: 16px;
 }
@@ -78,3 +97,31 @@ body{
     font-size: 12px;
 }
 
+/* Sweep To Right */
+.hvr-sweep-to-right {
+    padding: 20px;
+    background: #e2e9b6;
+    display: inline-block;
+    transform: perspective(1px) translateZ(0);
+    position: relative;
+    transition: color 0.3s;
+}
+.hvr-sweep-to-right:before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+z-index: -1;
+background: #e2e9b6;
+transform: scaleX(0);
+transform-origin: 0 50%;
+transition: transform 0.5s ease-out;
+}
+.hvr-sweep-to-right:hover {
+color: black;
+}
+.hvr-sweep-to-right:hover:before {
+transform: scaleX(1);
+}
