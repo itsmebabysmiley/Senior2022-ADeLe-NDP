@@ -3,3 +3,4 @@ python-dotenv
 tensorflow
 numpy
 pillow
+gdown
