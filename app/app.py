@@ -2,7 +2,7 @@ import base64
 import time
 import os
 from dotenv import load_dotenv
-from log.logger import get_logger
+# from log.logger import get_logger
 import json
 
 from flask import Flask,render_template,request, jsonify, redirect, url_for
@@ -11,7 +11,7 @@ from flask.helpers import make_response
 from prediction import AdelePrediction
 
 load_dotenv(dotenv_path='./.env')
-logger = get_logger('./app/log/adele-ndp/weed.log',level='info')
+# logger = get_logger('./app/log/adele-ndp/weed.log',level='info')
 adele = AdelePrediction()
 
 app = Flask(__name__)
@@ -43,18 +43,22 @@ def save_and_decode_image(request, logger):
     file_name = str(time.time())+'.jpg'
     # Save image.
     if file:
+        if not os.path.exists('./upload/'):
+            os.mkdir('./upload/')
+        
         if isinstance(file,dict):
             with open(f'./upload/{file_name}', 'wb') as f:
                 f.write(base64_img)
         else:
             file.save(os.path.join('./upload',file_name))
-        logger.info(f'save image to ./upload/{file_name}')
+        # logger.info(f'save image to ./upload/{file_name}')
     image_path = './upload/'+file_name
     return image_path
 
 
 @app.route('/prediction',methods=['POST'])
 def get_prediction():
+    logger = None
     file_name = save_and_decode_image(request,logger)
     if file_name:
         result = adele.prediction(file_name)

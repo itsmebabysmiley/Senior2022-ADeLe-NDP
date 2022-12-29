@@ -13,6 +13,8 @@ class AdelePrediction:
         
         if self.model == None:
             if not os.path.exists(self.model_path):
+                if not os.path.exists('./app/models/'):
+                    os.mkdir('./app/models/')
                 print("[INFO] Downloading InceptionV3.h5 .....")
                 self.download_model(url="https://drive.google.com/file/d/1-8EgaAi6KLHUt31n-OQCA5Z5GjyxI1wH/view?usp=sharing")
                 print('[INFO] Download completed')
