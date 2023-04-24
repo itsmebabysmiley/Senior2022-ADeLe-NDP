@@ -55,21 +55,33 @@
                         <div class="container text-start">
                             <h6>{{ data['name']}}</h6>
                             <p>
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error soluta magni dignissimos illo delectus repellendus at vitae dolor, obcaecati vero odio! Dignissimos praesentium unde laudantium, corporis illum eos magnam ut?
+                                {{ data['description']}}
                             </p>
-                            <p>
-                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt maiores ex magni facilis veniam porro nesciunt pariatur eum. Perferendis vel consequuntur laudantium libero id nesciunt asperiores odio doloremque nulla labore!
-                            </p>
+                            
                             <h6>ลักษณะของใบเมื่อขาดสารอาหาร</h6>
-                            <p>ใบเหลือง</p>
+                            <p> 
+                                {% for item in data['apperance'] %}
+                                <li>{{item}}</li>
+                                {% endfor %}
+                            </p>
                             <h6>สาเหตุการเกิด</h6>
-                            <p>แร่ธาตุในดินอาจไม่เพียงพอ</p>
+                            <p> 
+                                {% for item in data['cause'] %}
+                                <li>{{item}}</li>
+                                {% endfor %}
+                            </p>
                             <h6>วิธีการดูแล</h6>
-                            <p>ทำได้โดยการเพิ่มไนโดรเจน เช่น ปุ๋ยคอก</p>
+                            <p>
+                                {% for item in data['fix'] %}
+                                <li>{{item}}</li>
+                                {% endfor %}
+                            </p>
                             <p>แหล่งอ้างอิง</p>
-                            <ul>
-                                <li>V Grow by Doctor BOB </li>
-                            </ul>
+                            <p> 
+                                {% for item in data['source'] %}
+                                <li>{{item}}</li>
+                                {% endfor %}
+                            </p>
                         </div>
                     {% endif %}
                 </section>

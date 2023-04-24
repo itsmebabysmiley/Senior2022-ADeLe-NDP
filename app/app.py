@@ -11,8 +11,12 @@ from flask.helpers import make_response
 from prediction import AdelePrediction
 
 load_dotenv(dotenv_path='./.env')
+
 # logger = get_logger('./app/log/adele-ndp/weed.log',level='info')
-adele = AdelePrediction()
+
+# Load prediction class
+adele = AdelePrediction(model_name='InceptionV3-Synthesize-Multiple.h5',model_path='app/models/InceptionV3-Synthesize-Multiple.h5')
+
 
 app = Flask(__name__)
 
@@ -62,7 +66,16 @@ def get_prediction():
     file_name = save_and_decode_image(request,logger)
     if file_name:
         result = adele.prediction(file_name)
-        return make_response(result);
+
+        with open('./app/data/def_and_pets.json') as json_file:
+            data = json.load(json_file)
+            # get info from json file
+            class_index = result['class'].replace('c','')
+            class_name = list(data)[int(class_index)]
+            print(data[class_name])
+            result['class'] = class_name.capitalize()
+            result['info'] = data[class_name]
+            return make_response(result);
     
     return make_response({'error' : 'Missing filename or unsupported file type {.jpg, .jpeg, .png}.'})
 
@@ -120,22 +133,23 @@ def blog():
             data = json.load(json_file)
         if article in data:
             data = data[article]
+            print(data)
         else:
             data = None
         return render_template('blog_details.html',data=data)
 
 
-@app.route('/blog-legel-cannabisTH',methods=['GET'])
+@app.route('/blog/legel-cannabisTH',methods=['GET'])
 def blog_legel_cannabis():
     return render_template('blog_legel_weed.html')
 
 
-@app.route('/blog-cannabis-medical',methods=['GET'])
+@app.route('/blog/cannabis-medical',methods=['GET'])
 def blog_cannabis_medical():
     return render_template('blog_weed_for_medical.html');
 
 
-@app.route('/blog-cannabis-research',methods=['GET'])
+@app.route('/blog/cannabis-research',methods=['GET'])
 def blog_cannabis_research():
     return render_template('blog_weed_for_research.html');
 

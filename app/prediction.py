@@ -2,30 +2,46 @@ import tensorflow as tf
 import numpy as np 
 import gdown
 import os
-
-class_names = ['healthy', 'unhealthy']
+binary = ['healthy','unhealthy']
+multi = ['c0','c1','c2','c3','c4','c5']
 
 class AdelePrediction:
-    def __init__(self,model=None) -> None:
+    def __init__(self,model_name,model_path=None,model_url=None) -> None:
         
-        self.model_path = './app/models/InceptionV3.h5'
-        self.model = model
+        self.model_path = model_path
+        self.model_name = model_name
+        self.model_path = './app/models/'
+        self.model_url = model_url
+        self.class_names = multi
         
-        if self.model == None:
-            if not os.path.exists(self.model_path):
-                if not os.path.exists('./app/models/'):
-                    os.mkdir('./app/models/')
-                print("[INFO] Downloading InceptionV3.h5 .....")
-                self.download_model(url="https://drive.google.com/file/d/1-8EgaAi6KLHUt31n-OQCA5Z5GjyxI1wH/view?usp=sharing")
-                print('[INFO] Download completed')
+        if not os.path.exists('./app/models/'):
+                os.mkdir('./app/models/')
+                
+        # if self.model_path == None:
+        #     print("[INFO] Downloading model ..... from default base model ")
+        #     self.model_name = "InceptionV3.h5"
+        #     print('[INFO] Download model completed')
+        # elif self.model_url != None:
+        #     print("[INFO] Downloading model ..... from url",self.model_url)
+        #     self.download_model(url=self.model_url)
+        #     print('[INFO] Download model completed')
         
-        print('[INFO] Loading model.....')
-        self.model = tf.keras.models.load_model(self.model_path)
+        print('[INFO] Loading model.....',self.model_name)
+        # if self.model_path != None:
+        #     self.model = tf.keras.models.load_model(self.model_path)
+        # else:
+        #     path_to_load_model = os.path.join(self.model_path,self.model_name)
+        #     self.model = tf.keras.models.load_model(path_to_load_model)
+
+        self.model = tf.keras.models.load_model('./app/models/model.h5')
+        self.model.load_weights('./app/models/InceptionV3-Synthesize-Multiple.h5')
+        
         print('[INFO] Loading done......')
     
     
     def download_model(self, url):
-        gdown.download(url, self.model_path, quiet=False, fuzzy=True)
+        save_path_model = os.path.join(self.model_path,self.model_name)
+        gdown.download(url,output=save_path_model, quiet=False, fuzzy=True)
 
 
     def prediction(self,image_path):
@@ -43,9 +59,10 @@ class AdelePrediction:
         
         predictions = self.model.predict(img_array)
         score = tf.nn.softmax(predictions[0])
+        pre_class = str(self.class_names[np.argmax(score)])
         print(
             '[INFO] Prediction: {} with {:.2f}%'
-            .format(class_names[np.argmax(score)], 100*np.max(score))
+            .format(self.class_names[np.argmax(score)], 100*np.max(score))
             )
         
-        return {'class': str(class_names[np.argmax(score)]), 'prob' : str(100*np.max(score)) }
+        return {'class': pre_class, 'prob' : str(100*np.max(score)) }

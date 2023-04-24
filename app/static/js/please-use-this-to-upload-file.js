@@ -8,6 +8,4 @@ function takePhoto(){
 }
 async function loadFile(event) {
     document.getElementById('html-submit-btn').click();
-    
-
 }

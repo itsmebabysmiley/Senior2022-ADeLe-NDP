@@ -83,19 +83,19 @@
                     <div class="container" style="margin-top: 3rem;">
                         <div class="row g-0 text-center align-items-center">
                             <div class="col-5 round-box ">สาเหตุ</div>
-                            <div class="col-7 text-start content">ขาดไนโตรเจน ซึ่งเป็นธาตุอาหารที่ช่วยในการสร้างใบและการเจริญเติบโต
+                            <div id="cause" class="col-7 text-start content">ขาดไนโตรเจน ซึ่งเป็นธาตุอาหารที่ช่วยในการสร้างใบและการเจริญเติบโต
                             </div>
                         </div>
 
                         <div class="row g-0 text-center align-items-center">
                             <div class="col-5 round-box">อาการ</div>
-                            <div class="col-7 text-start content">ใบสีเหลืองทั้งใบจนถึงใบเหี่ยวกลายเป็นสีน้ำตาล
+                            <div id="apperance" class="col-7 text-start content">ใบสีเหลืองทั้งใบจนถึงใบเหี่ยวกลายเป็นสีน้ำตาล
                             </div>
                         </div>
 
                         <div class="row g-0 text-center align-items-center">
                             <div class="col-5 round-box">วิธัแก้ไข</div>
-                            <div class="col-7 text-start content">มูลไส้เดือน มูมวัว มูลหมู ใบก้ามปูหรือเพิ่มไนโตรเจน
+                            <div id="fix" class="col-7 text-start content">มูลไส้เดือน มูมวัว มูลหมู ใบก้ามปูหรือเพิ่มไนโตรเจน
                             </div>
                         </div>
                     </div>
@@ -106,14 +106,16 @@
                     </div>
                     <div class="container" style="margin-top: 1.5rem;">
                         <p>แหล่งอ้างอิง</p>
-                        <ul>
-                            <li>V Grow by Doctor BOB </li>
-                        </ul>
+                        <div id="source">
+                            <ul>
+                                <li>V Grow by Doctor BOB </li>
+                            </ul>
+                        </div>
                     </div>
                 </section>
                 <section id="healthy-info">
                     <div class="container">
-                        <div class="container" style="height: 2px; width:75%; background-color:#9fab48"></div>
+                        <div class="container" style="height: 2rem; width:75%; background-color:#9fab48"></div>
                         <div class="text-center" style="padding: 2rem;">
                             <h1 style="font-weight:bold;">ตรวจสอบเพิ่ม</h1>
                             <p style="font-size: 13px;">อัพโหลดรูป หรือ ถ่ายรูปใบกัญชาเพื่อให้ระบบตรวจสอบคุณภาพของใบ</p>
@@ -180,7 +182,7 @@
     function request_prediction(){
         
         let base64img = document.getElementById("img-prediction").getElementsByTagName('img').item(0).src;
-        console.log(base64img);
+        // console.log(base64img);
 
         let url = '/prediction'
         fetch(url, {
@@ -194,11 +196,19 @@
             return  response.json();
         })
         .then(function(res){
-            document.getElementById("class-prediction").getElementsByTagName('span').item(0).innerText = res['class'];
-            document.getElementById("prob-prediction").getElementsByTagName('span').item(0).innerText = res['prob'].slice(0, 2)+'%';
-
+        
+            document.getElementById("class-prediction").getElementsByTagName('span').item(0).innerText = res.class;
+            document.getElementById("prob-prediction").getElementsByTagName('span').item(0).innerText = res.prob.slice(0, 2)+'%';
+            let listOfCauses = "<li>" + res.info.cause.join("</li><li>") + "</li>";
+            document.getElementById("cause").innerHTML = listOfCauses;
+            let listOfApperances = "<li>" + res.info.apperance.join("</li><li>") + "</li>";
+            document.getElementById("apperance").innerHTML = listOfApperances;
+            let listOfFixes = "<li>" + res.info.fix.join("</li><li>") + "</li>";
+            document.getElementById("fix").innerHTML = listOfFixes;
+            let listOfSources = "<li>" + res.info.source.join("</li><li>") + "</li>";
+            document.getElementById("source").innerHTML = listOfSources;
             
-            if(res['class'] === 'สุขภาพดี' || res['class'] === 'healthy'){
+            if(res['class'] === 'สุขภาพดี' || res['class'] === 'Healthy'){
                 document.getElementById("unhealthy-info").remove();
             }else{
                 document.getElementById("healthy-info").remove();
